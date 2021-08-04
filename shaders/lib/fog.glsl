@@ -1,5 +1,5 @@
 #if !defined(_INCLUDE_FOG)
-#define _INCLUDE_FOG)
+#define _INCLUDE_FOG
 uniform float far;
 
 // const float wetnessHalflife = 600;

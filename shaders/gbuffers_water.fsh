@@ -8,6 +8,9 @@
 #include "/program/base.glsl"
 #include "/lib/fog.glsl"
 
+// Inputs
+in float blockId;
+
 void main() {
 	RenderResult res = render();
 
@@ -26,5 +29,7 @@ void main() {
 	float fog = fogFade(1.2, 1.2, vertDist);
 	res.color.rgb = mix(res.color.rgb, fogColor.rgb, fog);
 
-	setColor(res.color);
+	/* DRAWBUFFERS:04 */
+	gl_FragData[0] = res.color;
+	gl_FragData[1] = vec4(blockId);
 }

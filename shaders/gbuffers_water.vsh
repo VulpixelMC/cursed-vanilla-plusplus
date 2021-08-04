@@ -10,10 +10,17 @@
 #include "/program/base.glsl"
 #include "/lib/common.glsl"
 
+// Inputs
+#if !defined(_MC_ENTITY)
+#define _MC_ENTITY
+in vec2 mc_Entity;
+#endif
+
+// Outputs
+out float blockId;
+
 void main() {
 	RenderResult res = render();
 
-	// Calculate normal
-	vec3 normal = gl_NormalMatrix * gl_Normal;
-	float light = calcSimpleLighting(normal);
+	blockId = mc_Entity.x;
 }

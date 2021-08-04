@@ -113,6 +113,7 @@ void main() {
 // Uniforms
 uniform sampler2D lightmap;
 uniform sampler2D gtexture;
+uniform sampler2D gaux1;
 uniform vec4 entityColor;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
@@ -178,7 +179,9 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	setColor(res.color);
+	/* DRAWBUFFERS:04 */
+	gl_FragData[0] = res.color; //gcolor
+	gl_FragData[1] = vec4(5);
 }
 #endif
 

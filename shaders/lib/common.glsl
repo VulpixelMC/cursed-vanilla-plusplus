@@ -27,12 +27,6 @@ struct RenderResult {
 	vec4 color;
 };
 
-// Sets the gl_FragData[0] to the given color
-void setColor(vec4 color) {
-	/* DRAWBUFFERS:0 */
-	gl_FragData[0] = color; //gcolor
-}
-
 
 #endif // _INCLUDE_COMMON_FRAG
 

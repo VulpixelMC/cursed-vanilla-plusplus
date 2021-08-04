@@ -13,6 +13,7 @@ uniform mat4 gbufferProjectionInverse;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
 uniform float blindness;
+uniform sampler2D gaux1;
 
 in vec4 starData; //rgb = star color, a = flag for whether or not this pixel is a star.
 
@@ -40,7 +41,9 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	setColor(res.color);
+	/* DRAWBUFFERS:04 */
+	gl_FragData[0] = res.color; //gcolor
+	gl_FragData[1] = vec4(0);
 }
 #endif
 
