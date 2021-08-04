@@ -11,7 +11,12 @@
 #include "/lib/common.glsl"
 
 // Uniforms
+#if !defined(_CAMERAPOSITION)
 uniform vec3 cameraPosition;
+#endif
+
+// Guards
+#define _CAMERAPOSITION;
 
 void main() {
 	RenderResult res = render();
