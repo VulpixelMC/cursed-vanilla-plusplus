@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "./build.sh",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "silent",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		}
+	]
+}
