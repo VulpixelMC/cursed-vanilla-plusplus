@@ -1,6 +1,6 @@
 #!/bin/bash
-VERSION=0.2.0
-NAME="Example Shader"
+VERSION=0.1.0
+NAME="Cursed Vanilla++"
 
 # clean old files
 if [ -f ".build/$NAME $VERSION.zip" ]; then
