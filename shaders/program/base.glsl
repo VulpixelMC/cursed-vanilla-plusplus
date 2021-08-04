@@ -165,7 +165,7 @@ RenderResult render() {
 	#if defined(FOG)
 
 	// calculate fog
-	float fog = smoothstep(gl_Fog.start * 1.2, gl_Fog.end * 1.2, vertDist);
+	float fog = smoothstep(gl_Fog.start * 1.3, gl_Fog.end * 1.3, vertDist);
 
 	color.rgb = mix(color.rgb, fogColor.rgb, fog);
 

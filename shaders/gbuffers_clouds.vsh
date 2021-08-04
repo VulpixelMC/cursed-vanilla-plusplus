@@ -28,5 +28,5 @@ void main() {
 	vec3 worldPos = feetPos + cameraPosition;
 
 	// fading clouds
-	glcolor.a *= smoothstep(sin(worldPos.y / 3), cos(worldPos.y / 2), worldPos.y / 4 - cameraPosition.y / 4) + 0.25;
+	glcolor.a *= smoothstep(sin(worldPos.y / 3), cos(worldPos.y / 2), worldPos.y / 2 - cameraPosition.y / 2) + 0.25;
 }
