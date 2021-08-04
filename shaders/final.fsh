@@ -16,8 +16,8 @@ in float vertDist;
 
 void main() {
 	vec4 color = texture2D(gtexture, texcoord) * glcolor;
-	color.r *= 1.15;
-	color.g *= 1.075;
-	color.b *= 1.2;
+	color.r *= 1.05;
+	color.g *= 0.975;
+	color.b *= 1.05;
 	setColor(color);
 }

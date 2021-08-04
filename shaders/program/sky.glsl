@@ -18,7 +18,7 @@ in vec4 starData; //rgb = star color, a = flag for whether or not this pixel is 
 
 vec3 calcSkyColor(vec3 pos) {
 	float upDot = dot(pos, gbufferModelView[1].xyz); //not much, what's up with you?
-	float fog = fogify(max(upDot, 0.0), 0.25);
+	float fog = fogify(max(upDot, 0), 0.025);
 	vec3 color = mix(skyColor, fogColor, fog);
 	return color;
 }

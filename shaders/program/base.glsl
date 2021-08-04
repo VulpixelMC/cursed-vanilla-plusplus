@@ -1,5 +1,7 @@
 #if defined(VERT)
 
+#if !defined(_INCLUDE_BASE_VERT)
+#define _INCLUDE_BASE_VERT
 
 // Options
 #define FLAT_NORMAL vec3(0, 1, 0) // The normal for flat "blocks" using the cross model
@@ -23,9 +25,17 @@ out vec2 texcoord;
 out vec4 glcolor;
 out float vertDist;
 
-void render() {
-	#if defined(FOG)
+// Guards
+#define _GBUFFERMODELVIEW
+#define _GBUFFERMODELVIEWINVERSE
+#define _MC_ENTITY
+#define _LMCOORD
+#define _TEXCOORD
+#define _VERTDIST
+
+RenderResult render() {
 	vec4 position = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
+	#if defined(FOG)
 	vec3 blockPos = position.xyz;
 	vertDist = length(blockPos);
 	gl_Position = gl_ProjectionMatrix * gbufferModelView * position;
@@ -58,25 +68,35 @@ void render() {
 	lmcoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	#endif
 
+	#if !defined(NO_COLOR)
 	#if defined(TEXTURED)
 	glcolor = vec4(gl_Color.rgb * light, gl_Color.a);
 	#else
 	glcolor = gl_Color;
-	#endif
+	#endif // TEXTURED
+	#endif // NO_COLOR
+
+	RenderResult res = RenderResult(position);
+	return res;
 }
 
 #if defined(DEFAULT)
 void main() {
-	render();
+	RenderResult res = render();
 }
 #endif
 
 
-#endif
+#endif // _INCLUDE_BASE_VERT
+
+#endif // VERT
 
 
 
 #if defined(FRAG)
+
+#if !defined(_INCLUDE_BASE_FRAG)
+#define _INCLUDE_BASE_FRAG
 
 
 // Options
@@ -96,7 +116,6 @@ uniform sampler2D gtexture;
 uniform vec4 entityColor;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
-uniform float far;
 uniform int isEyeInWater;
 
 // Inputs
@@ -104,6 +123,18 @@ in vec2 lmcoord;
 in vec2 texcoord;
 in vec4 glcolor;
 in float vertDist;
+
+// Guards
+#define _LIGHTMAP
+#define _GTEXTURE
+#define _ENTITYCOLOR
+#define _FOGCOLOR
+#define _SKYCOLOR
+#define _ISEYEINWATER
+#define _MC_ENTITY
+#define _LMCOORD
+#define _TEXCOORD
+#define _VERTDIST
 
 RenderResult render() {
 	vec4 color;
@@ -118,7 +149,6 @@ RenderResult render() {
 	// calculate lighting
 	#if defined(LIGHTMAP)
 	// https://github.com/XorDev/XorDevs-Default-Shaderpack/blob/c13319fb7ca1a178915fba3b18dee47c54903cc3/shaders/gbuffers_textured.fsh#L35
-	// combine the lightmap with blindness
 	light = texture(lightmap, lmcoord).rgb;
 	#else
 	light = vec3(1);
@@ -135,15 +165,11 @@ RenderResult render() {
 	#if defined(FOG)
 
 	// calculate fog
-	float fog = smoothstep(gl_Fog.start, gl_Fog.end, vertDist);
+	float fog = smoothstep(gl_Fog.start * 1.2, gl_Fog.end * 1.2, vertDist);
 
 	color.rgb = mix(color.rgb, fogColor.rgb, fog);
 
-	// squares for debugging
-	#ifdef DEBUG
-	color.rgb = vec3(blindness);
-	#endif
-	#endif
+	#endif // FOG
 
 	RenderResult res = RenderResult(color);
 	return res;
@@ -157,4 +183,6 @@ void main() {
 #endif
 
 
-#endif
+#endif // _INCLUDE_BASE_FRAG
+
+#endif // FRAG
