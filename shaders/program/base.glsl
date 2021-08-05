@@ -85,7 +85,7 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	
+
 	blockId = mc_Entity.x;
 }
 #endif
@@ -183,13 +183,10 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	/* DRAWBUFFERS:40 */
-	if (blockId != 5) {
-		gl_FragData[0] = vec4(0); //colortex4
-		gl_FragData[1] = res.color; //gcolor
-	} else {
-		gl_FragData[0] = res.color; //colortex4
-		gl_FragData[1] = vec4(0); //gcolor
+	/* DRAWBUFFERS:04 */
+	gl_FragData[0] = res.color; //gcolor
+	if (blockId == 5) {
+		gl_FragData[1] = res.color; //colortex4
 	}
 }
 #endif

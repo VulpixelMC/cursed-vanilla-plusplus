@@ -19,11 +19,13 @@ void main() {
 	vec4 color = texture(gcolor, texcoord) * glcolor;
 	vec4 bloomtex = texture(colortex4, texcoord) * glcolor;
 
+	// add bloom effect
+	color.rgb += bloomtex.rgb;
+
 	color.r *= 1.05;
 	color.g *= 0.975;
 	color.b *= 1.05;
 
-	/* DRAWBUFFERS:40 */
-	gl_FragData[0] = bloomtex; //colortex4
-	gl_FragData[1] = color; //gcolor
+	/* DRAWBUFFERS:0 */
+	gl_FragData[0] = color; //gcolor
 }

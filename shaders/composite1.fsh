@@ -28,7 +28,7 @@ void main() {
 
 	vec4 color = vec4(result, 1) * glcolor;
 
-	/* DRAWBUFFERS:40 */
-	gl_FragData[0] = color; //colortex4
-	gl_FragData[1] = texture(gcolor, texcoord) * glcolor; //gcolor
+	/* DRAWBUFFERS:04 */
+	gl_FragData[0] = texture(gcolor, texcoord) * glcolor; //gcolor
+	gl_FragData[1] = color; //colortex4
 }
