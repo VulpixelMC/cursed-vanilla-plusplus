@@ -1,5 +1,5 @@
 # Cursed Vanilla++
-A cursed vanilla shader. Do not play at 3 am.<br>
+A cursed vanilla shader with cloud fade, bloom, better water, and more! Do not play at 3 am.<br>
 ***Note: Requires Iris! Optifine support isn't guaranteed. It may or may not work with Optifine. You can open a bug report if there are any issues with Optifine.***
 ![2021-08-05_09 45 58](https://user-images.githubusercontent.com/18603248/128360710-003e1d93-161d-4d9c-89fd-e083584da6e2.png)
 ![2021-08-05_09 42 27](https://user-images.githubusercontent.com/18603248/128360625-4f2232ea-8b7d-4ab1-ad6f-6ee4b21cf9f4.png)
