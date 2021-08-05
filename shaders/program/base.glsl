@@ -186,7 +186,7 @@ void main() {
 	/* DRAWBUFFERS:04 */
 	if (abs(blockId - 5) < 0.00001) {
 		gl_FragData[0] = vec4(0); //gcolor
-		gl_FragData[1] = res.color; //colortex4
+		gl_FragData[1] = res.color * 0.85; //colortex4
 	} else {
 		gl_FragData[0] = res.color; //gcolor
 		gl_FragData[1] = vec4(0); //colortex4
