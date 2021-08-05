@@ -17,14 +17,12 @@ in vec2 texcoord;
 void main() {
 	// Bloom
 	vec2 tex_offset = 1 / textureSize(colortex4, 0);
-	vec3 result = texture(colortex4, texcoord).rgb;
+	vec3 result = texture(colortex4, texcoord).rgb * weight[0];
 	
-	for (int i = 0; i < 21; i++) {
-		result += texture(colortex4, texcoord + vec2(tex_offset.x * i, 0)).rgb;
-		result += texture(colortex4, texcoord - vec2(tex_offset.x * i, 0)).rgb;
+	for (int i = 1; i < 21; i++) {
+		result += texture(colortex4, texcoord + vec2(tex_offset.x * i, 0)).rgb * weight[i];
+		result += texture(colortex4, texcoord - vec2(tex_offset.x * i, 0)).rgb * weight[i];
 	}
-
-	result /= 21;
 
 	vec4 color = vec4(result, 1);
 

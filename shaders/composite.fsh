@@ -19,12 +19,10 @@ void main() {
 	vec2 tex_offset = 1 / textureSize(colortex4, 0);
 	vec3 result = texture(colortex4, texcoord).rgb;
 	
-	for (int i = 0; i < 21; i++) {
-		result += texture(colortex4, texcoord + vec2(0, tex_offset.y * i)).rgb;
-		result += texture(colortex4, texcoord - vec2(0, tex_offset.y * i)).rgb;
+	for (int i = 1; i < 21; i++) {
+		result += texture(colortex4, texcoord + vec2(0, tex_offset.y * i)).rgb * weight[i];
+		result += texture(colortex4, texcoord - vec2(0, tex_offset.y * i)).rgb * weight[i];
 	}
-
-	result /= 21;
 
 	vec4 color = vec4(result, 1);
 
