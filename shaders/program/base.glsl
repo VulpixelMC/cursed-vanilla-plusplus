@@ -24,6 +24,7 @@ out vec2 lmcoord;
 out vec2 texcoord;
 out vec4 glcolor;
 out float vertDist;
+out float blockId;
 
 // Guards
 #define _GBUFFERMODELVIEW
@@ -32,6 +33,7 @@ out float vertDist;
 #define _LMCOORD
 #define _TEXCOORD
 #define _VERTDIST
+#define _BLOCKID
 
 RenderResult render() {
 	vec4 position = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
@@ -83,6 +85,8 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
+	
+	blockId = mc_Entity.x;
 }
 #endif
 
@@ -113,7 +117,6 @@ void main() {
 // Uniforms
 uniform sampler2D lightmap;
 uniform sampler2D gtexture;
-uniform sampler2D gaux1;
 uniform vec4 entityColor;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
@@ -124,6 +127,7 @@ in vec2 lmcoord;
 in vec2 texcoord;
 in vec4 glcolor;
 in float vertDist;
+in float blockId;
 
 // Guards
 #define _LIGHTMAP
@@ -132,10 +136,10 @@ in float vertDist;
 #define _FOGCOLOR
 #define _SKYCOLOR
 #define _ISEYEINWATER
-#define _MC_ENTITY
 #define _LMCOORD
 #define _TEXCOORD
 #define _VERTDIST
+#define _BLOCKID
 
 RenderResult render() {
 	vec4 color;
@@ -179,9 +183,14 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	/* DRAWBUFFERS:04 */
-	gl_FragData[0] = res.color; //gcolor
-	gl_FragData[1] = vec4(5);
+	/* DRAWBUFFERS:40 */
+	if (blockId != 5) {
+		gl_FragData[0] = vec4(0); //colortex4
+		gl_FragData[1] = res.color; //gcolor
+	} else {
+		gl_FragData[0] = res.color; //colortex4
+		gl_FragData[1] = vec4(0); //gcolor
+	}
 }
 #endif
 

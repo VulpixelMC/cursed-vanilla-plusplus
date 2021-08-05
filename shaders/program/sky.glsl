@@ -41,9 +41,8 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	/* DRAWBUFFERS:04 */
+	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = res.color; //gcolor
-	gl_FragData[1] = vec4(0);
 }
 #endif
 
