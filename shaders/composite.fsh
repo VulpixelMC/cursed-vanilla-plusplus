@@ -13,7 +13,6 @@ uniform sampler2D colortex4;
 
 // Inputs
 in vec2 texcoord;
-in float vertDist;
 
 void main() {
 	// Bloom

@@ -13,7 +13,6 @@ uniform sampler2D colortex4;
 // Inputs
 in vec2 texcoord;
 in vec4 glcolor;
-in float vertDist;
 
 void main() {
 	vec4 color = texture(gcolor, texcoord) * glcolor;
