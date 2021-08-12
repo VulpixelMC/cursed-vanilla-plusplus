@@ -16,7 +16,7 @@ in vec4 glcolor;
 
 void main() {
 	vec4 color = texture(gcolor, texcoord) * glcolor;
-	vec4 bloomtex = texture(colortex4, texcoord) * glcolor;
+	vec4 bloomtex = texture(colortex4, texcoord);
 
 	// add bloom effect
 	color.rgb += bloomtex.rgb;

@@ -181,13 +181,14 @@ RenderResult render() {
 void main() {
 	RenderResult res = render();
 	/* DRAWBUFFERS:04 */
-	gl_FragData[0] = res.color; //gcolor
 
 	// only add the emissive blocks to the bloom buffer
 	//  so we don't apply bloom to everything
 	if (abs(blockId - 5) < 0.00001) {
+		gl_FragData[0] = res.color * 1.5; //gcolor
 		gl_FragData[1] = res.color; //colortex4
 	} else {
+		gl_FragData[0] = res.color; //gcolor
 		gl_FragData[1] = vec4(0); //colortex4
 	}
 }
