@@ -56,7 +56,7 @@ BloomResult calcBloom(bool horizontal) {
 		float weight = weights[abs(i)];
 		vec2 dir = horizontal ? dirY(tex_offset.y, i) : dirX(tex_offset.x, i);
 
-		result += texture(colortex4, texcoord + dir) * weight * (BLOOM_INTENSITY * 0.5);
+		result += texture(colortex4, texcoord + dir) * weight * (BLOOM_INTENSITY * 0.75);
 		weightSum += weight;
 	}
 
