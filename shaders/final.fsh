@@ -4,6 +4,7 @@
 #define FRAG
 
 // Includes
+#include "/config/settings.glsl"
 #include "/lib/common.glsl"
 
 // Uniforms
@@ -21,9 +22,10 @@ void main() {
 	// add bloom effect
 	color.rgb += bloomtex.rgb;
 
+	#ifdef COLOR_SATURATION
 	color.r *= 1.05;
-	color.g *= 0.975;
 	color.b *= 1.05;
+	#endif // COLOR_SATURATION
 
 	/* DRAWBUFFERS:0 */
 	gl_FragData[0] = color; //gcolor
