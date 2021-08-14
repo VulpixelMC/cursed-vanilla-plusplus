@@ -23,8 +23,8 @@ void main() {
 	color.rgb += bloomtex.rgb;
 
 	#ifdef COLOR_SATURATION
-	color.r *= 1.05;
-	color.b *= 1.05;
+	color.r *= 1.025;
+	color.b *= 1.025;
 	#endif // COLOR_SATURATION
 
 	/* DRAWBUFFERS:0 */
