@@ -55,6 +55,7 @@ RenderResult render() {
 
 	// https://github.com/XorDev/XorDevs-Default-Shaderpack/blob/c13319fb7ca1a178915fba3b18dee47c54903cc3/shaders/gbuffers_textured.vsh#L42
 	// calculate simple lighting
+	// light = calcSimpleVanillaLighting(normal);
 	light = calcSimpleLighting(normal);
 	#else
 	// Don't apply lighting
