@@ -15,6 +15,8 @@ A cursed vanilla shader with cloud fade, bloom, better water, and more! Do not p
 ![2021-08-12_18 43 49](https://user-images.githubusercontent.com/18603248/129365114-24fc2b58-e9ff-4b8f-8519-a3e274c6e596.png)
 
 ## Screenshots
+![2021-08-15_01 04 45](https://user-images.githubusercontent.com/18603248/129467806-4da126c1-eab8-4835-aa03-ee1d0184d0d1.png)
+![2021-08-15_01 08 14](https://user-images.githubusercontent.com/18603248/129467807-677e5464-7dfe-4850-9759-d30720f17d52.png)
 ![2021-08-05_09 45 58](https://user-images.githubusercontent.com/18603248/128360710-003e1d93-161d-4d9c-89fd-e083584da6e2.png)
 ![2021-08-05_09 42 27](https://user-images.githubusercontent.com/18603248/128360625-4f2232ea-8b7d-4ab1-ad6f-6ee4b21cf9f4.png)
 ![2021-08-05_09 42 50](https://user-images.githubusercontent.com/18603248/128360656-ff2a1934-ec27-41a5-90ab-e4e79b9006a1.png)
