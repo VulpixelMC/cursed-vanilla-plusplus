@@ -36,16 +36,17 @@ out float blockId;
 
 RenderResult render() {
 	vec4 position = gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex);
+
 	#if defined(FOG)
 	vec3 blockPos = position.xyz;
 	vertDist = length(blockPos);
+	#endif // FOG
+
 	gl_Position = gl_ProjectionMatrix * gbufferModelView * position;
-	#else
-	gl_Position = ftransform();
-	#endif
 
-	float light;
+	vec4 color = gl_Color;
 
+	#ifdef ENABLE_NORMALS
 	#if defined(USE_NORMALS)
 	// Calculate normal
 	vec3 normal = gl_NormalMatrix * gl_Normal;
@@ -55,12 +56,15 @@ RenderResult render() {
 
 	// https://github.com/XorDev/XorDevs-Default-Shaderpack/blob/c13319fb7ca1a178915fba3b18dee47c54903cc3/shaders/gbuffers_textured.vsh#L42
 	// calculate simple lighting
-	// light = calcSimpleVanillaLighting(normal);
-	light = calcSimpleLighting(normal);
+	#ifdef VANILLA_LIGHTING
+	float light = calcSimpleVanillaLighting(normal);
 	#else
-	// Don't apply lighting
-	light = 1;
-	#endif
+	float light = calcSimpleLighting(normal);
+	#endif // VANILLA_LIGHTING
+	
+	color *= light;
+	#endif // USE_NORMALS
+	#endif // ENABLE_NORMALS
 
 	#if defined(TEXTURED)
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
@@ -70,11 +74,11 @@ RenderResult render() {
 	lmcoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	#endif
 
-	#if !defined(NO_COLOR)
+	#if !defined(NO_COLOR) // i forgot what this is supposed to be for so let's just hope nobody uses this
 	#if defined(TEXTURED)
-	glcolor = vec4(gl_Color.rgb * light, gl_Color.a);
+	glcolor = color;
 	#else
-	glcolor = gl_Color;
+	glcolor = color;
 	#endif // TEXTURED
 	#endif // NO_COLOR
 
@@ -148,22 +152,16 @@ RenderResult render() {
 	color = glcolor;
 	#endif
 
-	vec3 light;
-
 	// calculate lighting
 	#if defined(LIGHTMAP)
 	// https://github.com/XorDev/XorDevs-Default-Shaderpack/blob/c13319fb7ca1a178915fba3b18dee47c54903cc3/shaders/gbuffers_textured.fsh#L35
-	light = texture(lightmap, lmcoord).rgb;
-	#else
-	light = vec3(1);
-	#endif
-
-	color.rgb *= light;
+	color.rgb *= texture(lightmap, lmcoord).rgb;
+	#endif // LIGHTMAP
 
 	// apply mob entity flashes
 	#if defined(ENTITY_COLOR)
 	color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
-	#endif
+	#endif // ENTITY_COLOR
 
 	// render fog
 	#if defined(FOG)
@@ -183,6 +181,13 @@ RenderResult render() {
 void main() {
 	RenderResult res = render();
 
+	// don't waste cycles on calculating color and stuff
+	if (!(equals(blockId, 5) || equals(blockId, 6) || equals(blockId, 7))) {
+		/* DRAWBUFFERS:0 */
+		gl_FragData[0] = res.color; //gcolor
+		return;
+	}
+
 	// raw unmodified pixel data
 	vec4 rawColor = texture(gtexture, texcoord);
 	// what the hell do i call this
@@ -190,23 +195,19 @@ void main() {
 	float textureIntensity = (1.75 - BLOOM_INTENSITY / foobarfuck);
 
 	/* DRAWBUFFERS:04 */
+	gl_FragData[0] = res.color * (!(equals(blockId, 7) || equals(blockId, 6)) ? textureIntensity : 1); //gcolor
+
 	// only add the emissive blocks to the bloom buffer
 	//  so we don't apply bloom to everything
-	if (equals(blockId, 5)) { // Emissive Blocks
-		gl_FragData[0] = res.color * textureIntensity; //gcolor
+	if (equals(blockId, 5) || equals(blockId, 7)) { // Emissive Blocks
 		gl_FragData[1] = res.color; //colortex4
 	} else if (equals(blockId, 6)) { // Torches
 		// check if the pixel should be lit
 		if (getLuminance(rawColor.rgb) > 0.5125) {
-			gl_FragData[0] = res.color * textureIntensity; //gcolor
 			gl_FragData[1] = res.color; //colortex4
 		} else {
 			gl_FragData[0] = res.color; //gcolor
-			gl_FragData[1] = vec4(0); //colortex4
 		}
-	} else {
-		gl_FragData[0] = res.color; //gcolor
-		gl_FragData[1] = vec4(0); //colortex4
 	}
 }
 #endif

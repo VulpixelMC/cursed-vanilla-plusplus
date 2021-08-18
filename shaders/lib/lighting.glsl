@@ -25,15 +25,12 @@ float calcSimpleVanillaLighting(vec3 normal) {
 
 // calculate simple lighting
 float calcSimpleLighting(vec3 normal) {
-	float light = 1;
-	
 	// calculate ambient lighting
-	light = calcAmbient(light);
+	// light = calcAmbient(light);
+	float light = AMBIENT_STRENGTH;
 
 	// calculate diffuse
-	// how much the diffuse is multiplied by to give a better blend effect
-	float blendFactor = 0.2 / AMBIENT_STRENGTH;
-	light -= blendFactor * calcSimpleDiffuse(normal);
+	light -= (0.2 / AMBIENT_STRENGTH) * calcSimpleDiffuse(normal);
 	
 	// calculate specular
 	// no

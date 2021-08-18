@@ -1,3 +1,25 @@
+#if defined(VERT)
+
+
+out vec4 starData; //rgb = star color, a = flag for whether or not this pixel is a star.
+
+void render() {
+	gl_Position = ftransform();
+	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));
+}
+
+#if defined(DEFAULT)
+void main() {
+	render();
+}
+#endif // DEFAULT
+
+
+#endif // VERT
+
+
+
+
 #if defined(FRAG)
 
 
@@ -41,31 +63,11 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	/* DRAWBUFFERS:0 */
+	/* DRAWBUFFERS:04 */
 	gl_FragData[0] = res.color; //gcolor
+	gl_FragData[1] = vec4(0); //colortex4
 }
-#endif
+#endif // DEFAULT
 
 
-#endif
-
-
-
-#if defined(VERT)
-
-
-out vec4 starData; //rgb = star color, a = flag for whether or not this pixel is a star.
-
-void render() {
-	gl_Position = ftransform();
-	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));
-}
-
-#if defined(DEFAULT)
-void main() {
-	render();
-}
-#endif
-
-
-#endif
+#endif // FRAG

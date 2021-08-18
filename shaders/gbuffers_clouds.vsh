@@ -27,6 +27,9 @@ void main() {
 	vec3 feetPos = (gbufferModelViewInverse * vec4(viewPos, 1)).xyz;
 	vec3 worldPos = feetPos + cameraPosition;
 
+	// add alpha before applying fade
+	glcolor.a += 0.25;
+
 	// fading clouds
-	glcolor.a *= smoothstep(sin(worldPos.y / 3), cos(worldPos.y / 2), worldPos.y / 2 - cameraPosition.y / 2) + 0.25;
+	glcolor.a *= smoothstep(cos(worldPos.y), sin(worldPos.y), worldPos.y / 8 - cameraPosition.y / 8);
 }

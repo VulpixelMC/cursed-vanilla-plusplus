@@ -17,6 +17,4 @@ void main() {
 	glcolor = gl_Color;
 
 	texcoord = gl_MultiTexCoord0.st;
-
-	vertDist = length(position.xyz);
 }
