@@ -1,5 +1,5 @@
-// Options
-#define BLOOM_INTENSITY 1.75 // [1, 1.5, 1.75, 2]
+#define BLOOM_INTENSITY 2 // How intense bloom appears [1, 1.5, 1.75, 2]
+#define BLOOM_BRIGHTNESS 16 // The brightness of emissive textures [6, 8, 10, 12, 14, 16]
 // #define DEBUG
 #define FLAT_NORMAL vec3(0, 1, 0) // The normal for flat "blocks" using the cross model
 // #define OLD_BLOOM // The old kernel for the bloom effect

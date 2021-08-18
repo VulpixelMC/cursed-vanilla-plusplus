@@ -1,7 +1,13 @@
-#if defined(VERT)
+#if !defined(_INCLUDE_COMMON_FRAG)
+#define _INCLUDE_COMMON_FRAG
 
-#if !defined(_INCLUDE_COMMON_VERT)
-#define _INCLUDE_COMMON_VERT
+
+// Strict equals for floats; accounts for floating point errors when comparing floats
+bool equals(float x, float y) {
+	return abs(x - y) < 0.00001;
+}
+
+#if defined(VERT)
 
 
 // Rendering data to be passed to the main method
@@ -10,16 +16,11 @@ struct RenderResult {
 };
 
 
-#endif // _INCLUDE_COMMON_VERT
-
 #endif // VERT
 
 
 
 #if defined(FRAG)
-
-#if !defined(_INCLUDE_COMMON_FRAG)
-#define _INCLUDE_COMMON_FRAG
 
 
 // Rendering data to be passed to the main method
@@ -28,6 +29,8 @@ struct RenderResult {
 };
 
 
-#endif // _INCLUDE_COMMON_FRAG
-
 #endif // FRAG
+
+
+
+#endif // _INCLUDE_COMMON_FRAG

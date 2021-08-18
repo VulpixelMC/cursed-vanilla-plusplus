@@ -109,6 +109,7 @@ void main() {
 #include "/config/settings.glsl"
 #include "/lib/fog.glsl"
 #include "/lib/common.glsl"
+#include "/lib/color.glsl"
 
 // Constants
 
@@ -181,13 +182,28 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	/* DRAWBUFFERS:04 */
 
+	// raw unmodified pixel data
+	vec4 rawColor = texture(gtexture, texcoord);
+	// what the hell do i call this
+	float foobarfuck = (getLuminance(rawColor.rgb) * BLOOM_BRIGHTNESS);
+	float textureIntensity = (1.75 - BLOOM_INTENSITY / foobarfuck);
+
+	/* DRAWBUFFERS:04 */
 	// only add the emissive blocks to the bloom buffer
 	//  so we don't apply bloom to everything
-	if (abs(blockId - 5) < 0.00001) {
-		gl_FragData[0] = res.color * (1.75 - BLOOM_INTENSITY / 8); //gcolor
+	if (equals(blockId, 5)) { // Emissive Blocks
+		gl_FragData[0] = res.color * textureIntensity; //gcolor
 		gl_FragData[1] = res.color; //colortex4
+	} else if (equals(blockId, 6)) { // Torches
+		// check if the pixel should be lit
+		if (getLuminance(rawColor.rgb) > 0.5125) {
+			gl_FragData[0] = res.color * textureIntensity; //gcolor
+			gl_FragData[1] = res.color; //colortex4
+		} else {
+			gl_FragData[0] = res.color; //gcolor
+			gl_FragData[1] = vec4(0); //colortex4
+		}
 	} else {
 		gl_FragData[0] = res.color; //gcolor
 		gl_FragData[1] = vec4(0); //colortex4
