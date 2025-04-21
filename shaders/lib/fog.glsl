@@ -2,6 +2,15 @@
 #define _INCLUDE_FOG
 uniform float far;
 
+#if !defined(_FOGSTART)
+#define _FOGSTART
+uniform float fogStart;
+#endif // _FOGSTART
+#if !defined(_FOGEND)
+#define _FOGEND
+uniform float fogEnd;
+#endif // _FOGEND
+
 // const float wetnessHalflife = 600;
 
 float fogify(float x, float w) {
@@ -10,7 +19,7 @@ float fogify(float x, float w) {
 
 // make a fog fade effect using smoothstep
 float fogFade(float start, float end, float vertDist) {
-	return smoothstep(gl_Fog.start * start, gl_Fog.end * end, vertDist);
+	return smoothstep(fogStart * start, fogEnd * end, vertDist);
 }
 
 // fogFade but it doesn't depend on gl_Fog if the render distance is > 24

@@ -1,4 +1,4 @@
-#version 150
+#version 150 compatibility
 
 // Preprocessors
 #define FRAG
@@ -7,8 +7,6 @@
 // Includes
 #include "/program/base.glsl"
 #include "/lib/fog.glsl"
-
-// Inputs
 
 void main() {
 	RenderResult res = render();
@@ -28,6 +26,6 @@ void main() {
 	float fog = fogFade(1.3, 1.3, vertDist);
 	res.color.rgb = mix(res.color.rgb, fogColor.rgb, fog);
 
-	/* DRAWBUFFERS:0 */
+	/* RENDERTARGETS: 0 */
 	gl_FragData[0] = res.color;
 }

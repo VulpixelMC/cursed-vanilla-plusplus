@@ -120,6 +120,8 @@ void main() {
 // Uniforms
 uniform sampler2D lightmap;
 uniform sampler2D gtexture;
+uniform sampler2D colortex0;
+uniform sampler2D colortex4;
 uniform vec4 entityColor;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
@@ -135,6 +137,8 @@ in float blockId;
 // Guards
 #define _LIGHTMAP
 #define _GTEXTURE
+#define _COLORTEX0
+#define _COLORTEX4
 #define _ENTITYCOLOR
 #define _FOGCOLOR
 #define _SKYCOLOR
@@ -183,7 +187,7 @@ void main() {
 
 	// don't waste cycles on calculating color and stuff
 	if (!(equals(blockId, 5) || equals(blockId, 6) || equals(blockId, 7))) {
-		/* DRAWBUFFERS:0 */
+		/* RENDERTARGETS: 0 */
 		gl_FragData[0] = res.color; //gcolor
 		return;
 	}
@@ -194,7 +198,7 @@ void main() {
 	float foobarfuck = (getLuminance(rawColor.rgb) * BLOOM_BRIGHTNESS);
 	float textureIntensity = (1.75 - BLOOM_INTENSITY / foobarfuck);
 
-	/* DRAWBUFFERS:04 */
+	/* RENDERTARGETS: 0,4 */
 	gl_FragData[0] = res.color * (!(equals(blockId, 7) || equals(blockId, 6)) ? textureIntensity : 1); //gcolor
 
 	// only add the emissive blocks to the bloom buffer

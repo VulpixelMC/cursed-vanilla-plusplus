@@ -1,4 +1,4 @@
-#version 150
+#version 150 compatibility
 
 // Preprocessors
 #define FRAG
@@ -9,7 +9,7 @@
 void main() {
 	BloomResult res = calcBloom(false);
 
-	/* DRAWBUFFERS:04 */
-	gl_FragData[0] = texture(gcolor, texcoord); //gcolor
+	/* RENDERTARGETS: 0,4 */
+	gl_FragData[0] = texture(colortex0, texcoord); //gcolor
 	gl_FragData[1] = res.color; //colortex4
 }

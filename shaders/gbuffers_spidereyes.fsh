@@ -1,4 +1,4 @@
-#version 150
+#version 150 compatibility
 
 #define FRAG
 #define TEXTURED
@@ -8,7 +8,7 @@
 void main() {
 	RenderResult res = render();
 
-	/* DRAWBUFFERS:04 */
+	/* RENDERTARGETS: 0,4 */
 	gl_FragData[0] = res.color; //gcolor
 	gl_FragData[1] = res.color; //colortex4
 }

@@ -25,7 +25,7 @@ out float vertDist;
 #include "/lib/constants.glsl"
 
 // Uniforms
-uniform sampler2D gcolor;
+uniform sampler2D colortex0;
 uniform sampler2D colortex4;
 uniform float viewWidth;
 uniform float viewHeight;

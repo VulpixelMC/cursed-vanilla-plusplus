@@ -1,10 +1,10 @@
 #if defined(VERT)
 
-
+// Vert Outputs
 out vec4 starData; //rgb = star color, a = flag for whether or not this pixel is a star.
 
 void render() {
-	gl_Position = ftransform();
+	gl_Position = ftransform(); // invariant gl_Position;
 	starData = vec4(gl_Color.rgb, float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0));
 }
 
@@ -36,7 +36,10 @@ uniform vec3 fogColor;
 uniform vec3 skyColor;
 uniform float blindness;
 uniform sampler2D gaux1;
+uniform sampler2D colortex0;
+uniform sampler2D colortex4;
 
+// Inputs
 in vec4 starData; //rgb = star color, a = flag for whether or not this pixel is a star.
 
 vec3 calcSkyColor(vec3 pos) {
@@ -63,7 +66,7 @@ RenderResult render() {
 #if defined(DEFAULT)
 void main() {
 	RenderResult res = render();
-	/* DRAWBUFFERS:04 */
+	/* RENDERTARGETS: 0,4 */
 	gl_FragData[0] = res.color; //gcolor
 	gl_FragData[1] = vec4(0); //colortex4
 }

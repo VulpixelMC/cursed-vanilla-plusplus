@@ -1,4 +1,4 @@
-#version 150
+#version 150 compatibility
 
 // Preprocessors
 #define FRAG
@@ -8,7 +8,7 @@
 #include "/lib/common.glsl"
 
 // Uniforms
-uniform sampler2D gcolor;
+uniform sampler2D colortex0;
 uniform sampler2D colortex4;
 
 // Inputs
@@ -16,7 +16,7 @@ in vec2 texcoord;
 in vec4 glcolor;
 
 void main() {
-	vec4 color = texture(gcolor, texcoord) * glcolor;
+	vec4 color = texture(colortex0, texcoord) * glcolor;
 	vec4 bloomtex = texture(colortex4, texcoord);
 
 	// add bloom effect
@@ -27,6 +27,6 @@ void main() {
 	color.b *= 1.025;
 	#endif // COLOR_SATURATION
 
-	/* DRAWBUFFERS:0 */
+	/* RENDERTARGETS: 0 */
 	gl_FragData[0] = color; //gcolor
 }
